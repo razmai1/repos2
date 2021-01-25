@@ -9,7 +9,6 @@ RUN \
   apt-get install -y byobu curl git htop man unzip vim nano tar wget && \
   rm -rf /var/lib/apt/lists/*
   
-RUN adduser -m razi001
 
 ADD heroku-exec.sh .
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
