@@ -9,6 +9,9 @@ RUN \
   apt-get install -y byobu curl git htop man unzip vim nano tar wget sudo && \
   rm -rf /var/lib/apt/lists/*
   
+ADD heroku-exec.sh .
+RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+
 ### u29515 user ###
 # '-l': see https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#user
 RUN useradd -l -u 29515 -G sudo -md /home/u29515 -s /bin/bash -p u29515 u29515 \
@@ -26,9 +29,5 @@ RUN sudo echo "Running 'sudo' for u29515: success" && \
     # create .bashrc.d folder and source it in the bashrc
     mkdir /home/u29515/.bashrc.d && \
     (echo; echo "for i in \$(ls \$HOME/.bashrc.d/*); do source \$i; done"; echo) >> /home/u29515/.bashrc
-  
-
-ADD heroku-exec.sh .
-RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
 CMD bash heroku-exec.sh
